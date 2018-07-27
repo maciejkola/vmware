@@ -1,0 +1,44 @@
+This script adds/removes RAM or CPU to/from Virtual Machine using vCloud PI interface. Messages from operations are logged to syslog.
+Adding RAM/CPU works when VM is powered on, but removing resources will work only if the VM is powered off. For this we have setRAMrestart/setCPUrestart options.
+
+To make script running, you need to o two things:
+-------------------------------------------------
+1. On vCloud enable "Virtual CPU hot add" and "Memory hot add" on Virtual Machine (vCloud -> right click on the VM -> properties)
+
+2. Get VM ID from vCloud:
+  a. get the token:
+      curl -i -k -H "Accept:application/*+xml;version=1.5" -u "<LOGIN@ORGANIZATION" -X POST "<VCLOUD>/api/sessions" | sed -n '4p' | awk -F: '{ print $2 }' | sed 's/^ *//g'
+
+  b. with the token, get organization ID:
+      curl -i -k -H "Accept:application/*+xml;version=27.0" -H "x-vcloud-authorization: <TOKEN>" -X GET <VCLOUD>/api/org/
+      
+      (from the output find Org href=...)
+      
+  c. with the token and organization ID get vdc ID:
+       curl -i -k -H "Accept:application/*+xml;version=27.0" -H "x-vcloud-authorization: <TOKEN>" -X GET <VCLOUD>/api/org/<ORGANIZATION ID>/
+    
+      (from the output find something with vdc in the path)
+      
+  d. with the token and vdc ID get the list of vApps:
+        curl -i -k -H "Accept:application/*+xml;version=27.0" -H "x-vcloud-authorization: <TOKEN>" -X GET <VCLOUD>/api/vdc/<VDC ID>
+        
+        
+Now, put vApp ID and other stuff in the script:
+-----------------------------------------------
+      # vcloud url:
+      url = '...'
+
+      # VM ID in vCloud notation:
+      vApp = '...'
+
+      # credentials
+      username_and_org = '...'
+      password = '...'
+
+      # limit of loop execution to prevent infinite loop
+      limit=15
+
+      # for how long I should wait before starting VM (in restart option)
+      wait_before_start=15
+      
+      
