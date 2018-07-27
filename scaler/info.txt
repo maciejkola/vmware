@@ -22,7 +22,8 @@ To make script running, you need to o two things:
   d. with the token and vdc ID get the list of vApps:
         curl -i -k -H "Accept:application/*+xml;version=27.0" -H "x-vcloud-authorization: <TOKEN>" -X GET <VCLOUD>/api/vdc/<VDC ID>
         
-        
+      (from the output find vApp ID - it's in the same line as vApp name)
+         
 Now, put vApp ID and other stuff in the script:
 -----------------------------------------------
       # vcloud url:
