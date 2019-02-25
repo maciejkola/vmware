@@ -1,7 +1,7 @@
-This script adds/removes RAM or CPU to/from Virtual Machine using vCloud PI interface. Messages from operations are logged to syslog.
+This script adds/removes RAM or CPU to/from Virtual Machine using vCloud API interface. Messages from operations are logged to syslog.
 Adding RAM/CPU works when VM is powered on, but removing resources will work only if the VM is powered off. For this we have setRAMrestart/setCPUrestart options.
 
-To make script running, you need to o two things:
+To make script running, you need to do two things:
 -------------------------------------------------
 1. On vCloud enable "Virtual CPU hot add" and "Memory hot add" on Virtual Machine (vCloud -> right click on the VM -> properties)
 
